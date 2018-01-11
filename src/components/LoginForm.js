@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Text} from 'react-native';
+import {Text, View, ToastAndroid} from 'react-native';
 import {Button, Card, CardSection, Input, Spinner} from "./common";
 import firebase from 'firebase';
 import { emailChanged, passwordChanged, loginUser } from '../actions';
@@ -17,6 +17,19 @@ class LoginForm extends Component {
     onButtonPress() {
         const {email, password} = this.props;
         this.props.loginUser({email, password});
+    }
+
+    renderError() {
+        if (this.props.error) {
+            ToastAndroid.show(this.props.error, ToastAndroid.SHORT);
+            return (
+                <View style={{backgroundColor: 'white'}}>
+                    <Text style={styles.errorTextStyle}>
+                        {this.props.error}
+                    </Text>
+                </View>
+            );
+        }
     }
 
     render() {
@@ -42,6 +55,8 @@ class LoginForm extends Component {
                     />
                 </CardSection>
 
+                {this.renderError()}
+
                 <CardSection>
                     <Button title="" onPress={this.onButtonPress.bind(this)}>
                         Login
@@ -65,7 +80,8 @@ const style = {
 const mapStateToProps = state => {
   return {
       email: state.auth.email,
-      password: state.auth.password
+      password: state.auth.password,
+      error: state.auth.error
   };
 };
 
