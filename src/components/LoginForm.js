@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {Text} from 'react-native';
 import {Button, Card, CardSection, Input, Spinner} from "./common";
 import firebase from 'firebase';
-import { emailChanged, passwordChanged } from '../actions';
+import { emailChanged, passwordChanged, loginUser } from '../actions';
 import { connect } from 'react-redux';
 
 class LoginForm extends Component {
@@ -12,6 +12,11 @@ class LoginForm extends Component {
 
     onPasswordChange(text) {
         this.props.passwordChanged(text);
+    }
+
+    onButtonPress() {
+        const {email, password} = this.props;
+        this.props.loginUser({email, password});
     }
 
     render() {
@@ -38,7 +43,7 @@ class LoginForm extends Component {
                 </CardSection>
 
                 <CardSection>
-                    <Button title="" onPress="">
+                    <Button title="" onPress={this.onButtonPress.bind(this)}>
                         Login
                     </Button>
                 </CardSection>
@@ -64,4 +69,7 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps, { emailChanged, passwordChanged })(LoginForm);
+export default connect(
+    mapStateToProps,
+    { emailChanged, passwordChanged, loginUser }
+    )(LoginForm);
