@@ -1,9 +1,8 @@
 import React, {Component} from 'react';
 import {Text, View, ToastAndroid} from 'react-native';
 import {Button, Card, CardSection, Input, Spinner} from "./common";
-import firebase from 'firebase';
-import { emailChanged, passwordChanged, loginUser } from '../actions';
-import { connect } from 'react-redux';
+import {emailChanged, passwordChanged, loginUser} from '../actions';
+import {connect} from 'react-redux';
 
 class LoginForm extends Component {
     onEmailChange(text) {
@@ -32,8 +31,19 @@ class LoginForm extends Component {
         }
     }
 
+    renderButton() {
+        if (this.props.loading) {
+            return <Spinner size="large"/>;
+        }
+
+        return (
+            <Button title="" onPress={this.onButtonPress.bind(this)}>
+                Login
+            </Button>
+        );
+    }
+
     render() {
-        const styles = style;
         return (
             <Card>
                 <CardSection>
@@ -58,9 +68,7 @@ class LoginForm extends Component {
                 {this.renderError()}
 
                 <CardSection>
-                    <Button title="" onPress={this.onButtonPress.bind(this)}>
-                        Login
-                    </Button>
+                    {this.renderButton()}
                 </CardSection>
 
             </Card>
@@ -68,7 +76,7 @@ class LoginForm extends Component {
     }
 }
 
-const style = {
+const styles = {
     errorTextStyle: {
         fontSize: 20,
         alignSelf: 'center',
@@ -77,15 +85,12 @@ const style = {
 };
 
 //in the reducers index file we assigned the email reducer to the property auth
-const mapStateToProps = state => {
-  return {
-      email: state.auth.email,
-      password: state.auth.password,
-      error: state.auth.error
-  };
+const mapStateToProps = ({auth}) => {
+    const {email, password, error, loading} = auth;
+    return {email, password, error, loading};
 };
 
 export default connect(
     mapStateToProps,
-    { emailChanged, passwordChanged, loginUser }
-    )(LoginForm);
+    {emailChanged, passwordChanged, loginUser}
+)(LoginForm);
