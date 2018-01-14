@@ -19,7 +19,7 @@ export const loginUser = ({email, password}) => {
     return (dispatch) => {
         dispatch({ type: LOGIN_USER });
 
-        firebase.auth().signInWtihEmailAndPassword(email, password)
+        firebase.auth().signInWithEmailAndPassword(email, password)
             .then(user => loginUserSuccess(dispatch, user))
             .catch((error) => {
             console.log(error);
@@ -35,5 +35,5 @@ const loginUserSuccess = (dispatch, user) => {
 };
 
 const loginUserFail = (dispatch) => {
-    dispatch({ type: LOGIN_USER_FAIL, payload: user});
+    dispatch({ type: LOGIN_USER_FAIL});
 };
