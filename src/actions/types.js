@@ -7,3 +7,4 @@ export const LOGIN_USER = 'LOGIN_USER';
 
 // Employee form
 export const EMPLOYEE_UPDATE = 'EMPLOYEE_UPDATE';
+export const EMPLOYEE_CREATE = 'EMPLOYEE_CREATE';
