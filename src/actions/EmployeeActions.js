@@ -48,3 +48,19 @@ export const employeeEdit = ({ name, phone, shift, uid }) => {
             });
     };
 };
+
+export const employeeFire = ({ uid }) => {
+    const { currentUser } = firebase.auth();
+
+    return () => {
+        firebase.database().ref(`/users/${currentUser.uid}/employees${uid}`)
+            .remove()
+            .then(() => {
+                ToastAndroid.show('That jerk is gone!', ToastAndroid.SHORT);
+                Actions.employeeList({ type: 'reset'});
+            })
+            .catch((error) => {
+                ToastAndroid.show('They just wont die! \n ' + error, ToastAndroid.LONG);
+            });
+    };
+};

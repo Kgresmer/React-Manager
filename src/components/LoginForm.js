@@ -21,7 +21,6 @@ class LoginForm extends Component {
     renderError() {
         if (this.props.error) {
             ToastAndroid.show(this.props.error, ToastAndroid.SHORT);
-            console.log('calling toast');
             return (
                 <View style={{backgroundColor: 'white'}}>
                     <Text style={styles.errorTextStyle}>
