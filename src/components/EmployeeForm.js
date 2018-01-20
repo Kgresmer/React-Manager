@@ -22,7 +22,7 @@ class EmployeeForm extends Component {
                 <CardSection>
                     <Input
                         label="Phone"
-                        placeholder="555-555-5555"
+                        placeholder="555-5555"
                         value={this.props.phone}
                         onChangeText={value => this.props.employeeUpdate({prop: 'phone', value})}
                     />
@@ -31,7 +31,7 @@ class EmployeeForm extends Component {
                 <CardSection style={styles.pickerContainer}>
                     <Text style={styles.pickerTextStyles}>Select a Shift</Text>
                     <Picker
-                        style={{flex: 1}}
+                        style={{width: '100%'}}
                         selectedValue={this.props.shift}
                         onValueChange={value => this.props.employeeUpdate({prop: 'shift', value})}>
                         <Picker.Item label="Monday" value="Monday"/>

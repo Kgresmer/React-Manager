@@ -4,10 +4,33 @@ import {createStore, applyMiddleware } from 'redux';
 import reducers from './reducers';
 import ReduxThunk from 'redux-thunk';
 import firebase from 'firebase';
-import Router from './Router';
+import { StackNavigator } from 'react-navigation';
+import LoginForm from "./components/LoginForm";
+import EmployeeList from "./components/EmployeeList";
+import EmployeeCreate from "./components/EmployeeCreate";
+import EmployeeEdit from "./components/EmployeeEdit";
 
+
+const SimpleApp = StackNavigator({
+    Login: { screen: LoginForm },
+    Employees: {
+        screen: EmployeeList
+    },
+    CreateEmployee: { screen: EmployeeCreate },
+    EditEmployee: {
+        screen: EmployeeEdit
+    }
+});
 
 export default class App extends Component<{}> {
+    constructor() {
+        super();
+
+        console.ignoredYellowBox = [
+            'Setting a timer'
+        ];
+    }
+
     componentWillMount() {
         const config = {
             apiKey: "AIzaSyB365jMu5F9G6dcmtTNJNeAubKu0vDz3L4",
@@ -24,7 +47,7 @@ export default class App extends Component<{}> {
         const store = createStore(reducers, {}, applyMiddleware(ReduxThunk));
         return (
             <Provider store={store}>
-                <Router/>
+                <SimpleApp />
             </Provider>
         );
     }

@@ -5,6 +5,10 @@ import {emailChanged, passwordChanged, loginUser} from '../actions';
 import {connect} from 'react-redux';
 
 class LoginForm extends Component {
+    static navigationOptions = {
+        title: 'Please Login',
+    };
+
     onEmailChange(text) {
         this.props.emailChanged(text);
     }
@@ -15,7 +19,8 @@ class LoginForm extends Component {
 
     onButtonPress() {
         const {email, password} = this.props;
-        this.props.loginUser({email, password});
+        const { navigate } = this.props.navigation;
+        this.props.loginUser({email, password, navigate});
     }
 
     renderError() {

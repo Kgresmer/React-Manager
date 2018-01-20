@@ -4,8 +4,21 @@ import { ListView } from 'react-native';
 import { connect } from 'react-redux';
 import {employeesFetch} from "../actions/EmployeeActions";
 import ListItem from './ListItem';
+import {Button} from "./common";
 
 class EmployeeList extends Component {
+
+    static navigationOptions = ({ navigation }) => {
+        return {
+            title: 'Employees',
+            headerRight: <Button onPress={
+                    () => {
+                    navigation.navigate('CreateEmployee');
+                }
+            }>Add</Button>,
+        }
+    };
+
     componentWillMount() {
         this.props.employeesFetch();
 
@@ -25,7 +38,8 @@ class EmployeeList extends Component {
     }
 
     renderRow(employee) {
-        return <ListItem employee={employee} />;
+        return <ListItem employee={employee} navigation={this.props.navigation}
+        />;
     }
 
     render() {
@@ -33,7 +47,7 @@ class EmployeeList extends Component {
             <ListView
                 enableEmptySections
                 dataSource={this.dataSource}
-                renderRow={this.renderRow}
+                renderRow={this.renderRow.bind(this)}
             />
         )
     }
@@ -44,8 +58,7 @@ const mapStateToProps = state => {
     const employees = _.map(state.employees, (val, uid) => {
       return { ...val, uid };
     });
-
     return { employees };
 };
 
-export default connect({mapStateToProps, employeesFetch})(EmployeeList);
+export default connect(mapStateToProps, { employeesFetch})(EmployeeList);

@@ -1,6 +1,6 @@
 import {EMPLOYEE_SAVE_SUCCESS, EMPLOYEE_UPDATE, EMPLOYEES_FETCH_SUCCESS} from './types';
-import { Actions } from 'react-native-router-flux';
 import firebase from 'firebase';
+import { ToastAndroid } from "react-native";
 
 export const employeeUpdate = ({ prop, value}) => {
     return {
@@ -9,16 +9,13 @@ export const employeeUpdate = ({ prop, value}) => {
     }
 };
 
-export const employeeCreate = ({ name, phone, shift }) => {
+export const employeeCreate = ({ name, phone, shift, navigate }) => {
     const { currentUser } = firebase.auth();
 
     return (dispatch) => {
         firebase.database().ref(`/users/${currentUser.uid}/employees`)
             .push({name, phone, shift})
-            .then(() => {
-                dispatch({type: EMPLOYEE_SAVE_SUCCESS });
-                Actions.employeeList({ type: 'reset'});
-            });
+            .then(() => employeeSaveSuccess(dispatch, navigate));
     };
 };
 
@@ -36,31 +33,36 @@ export const employeesFetch = () => {
     };
 };
 
-export const employeeEdit = ({ name, phone, shift, uid }) => {
+export const employeeEdit = ({ name, phone, shift, uid, navigate }) => {
     const { currentUser } = firebase.auth();
 
     return (dispatch) => {
-        firebase.database().ref(`/users/${currentUser.uid}/employees${uid}`)
+        firebase.database().ref(`/users/${currentUser.uid}/employees/${uid}`)
             .set({name, phone, shift})
-            .then(() => {
-                dispatch({type: EMPLOYEE_SAVE_SUCCESS });
-                Actions.employeeList({ type: 'reset'});
-            });
+            .then(() => employeeSaveSuccess(dispatch, navigate));
     };
 };
 
-export const employeeFire = ({ uid }) => {
+export const employeeFire = ({ uid, navigate }) => {
     const { currentUser } = firebase.auth();
 
     return () => {
-        firebase.database().ref(`/users/${currentUser.uid}/employees${uid}`)
+        firebase.database().ref(`/users/${currentUser.uid}/employees/${uid}`)
             .remove()
-            .then(() => {
-                ToastAndroid.show('That jerk is gone!', ToastAndroid.SHORT);
-                Actions.employeeList({ type: 'reset'});
-            })
+            .then(() => employeeFireSuccess(navigate))
             .catch((error) => {
                 ToastAndroid.show('They just wont die! \n ' + error, ToastAndroid.LONG);
             });
     };
+};
+
+const employeeFireSuccess = (navigate) => {
+    ToastAndroid.show('That jerk is gone!', ToastAndroid.SHORT);
+    navigate('Employees');
+};
+
+const employeeSaveSuccess = (dispatch, navigate) => {
+    ToastAndroid.show('Success', ToastAndroid.SHORT);
+    dispatch({type: EMPLOYEE_SAVE_SUCCESS });
+    navigate('Employees');
 };

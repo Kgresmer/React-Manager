@@ -1,37 +1,58 @@
 import _ from 'lodash';
-import React, { Component } from 'react';
-import {Card, CardSection, Button, Confirm } from "./common";
-import { connect } from 'react-redux';
-import { employeeEdit, employeeUpdate, employeeFire } from "../actions";
+import React, {Component} from 'react';
+import {Card, CardSection, Button, Confirm} from "./common";
+import {connect} from 'react-redux';
+import {employeeEdit, employeeUpdate, employeeFire} from "../actions";
 import EmployeeForm from "./EmployeeForm";
 import Communications from 'react-native-communications';
 
 class EmployeeEdit extends Component {
-    state = { showModal: false};
+    static navigationOptions = ({navigation}) => {
+        return {
+            title: `Edit Employee: ${navigation.state.params.employee.name}`,
+            headerTitleStyle: {textAlign: 'center', alignSelf: 'center'},
+            headerStyle: {
+                backgroundColor: 'white',
+            },
+        }
+    };
+
+    state = {showModal: false};
 
     componentWillMount() {
-        _.each(this.props.employee, (value, prop) => {
-           this.props.employeeUpdate({prop, value});
+        const {params} = this.props.navigation.state;
+        _.each(params.employee, (value, prop) => {
+            this.props.employeeUpdate({prop, value});
         });
     }
 
     onButtonPress() {
-        const { name, phone, shift } = this.props;
-        this.props.employeeEdit({ name, phone, shift, uid: this.props.employee.uid });
+        const {name, phone, shift} = this.props;
+        this.props.employeeEdit({
+            name,
+            phone,
+            shift,
+            uid: this.props.navigation.state.params.employee.uid,
+            navigate: this.props.navigation.navigate
+        });
     }
 
     onTextPress() {
-        const { phone, shift } = this.props;
+        const {phone, shift} = this.props;
 
         Communications.text(phone, `Your upcoming shift is on ${shift}`);
     }
 
     onAccept() {
-        this.props.employeeFire({ uid: this.props.employee.uid});
+        this.setState({showModal: false});
+        this.props.employeeFire({
+            uid: this.props.navigation.state.params.employee.uid,
+            navigate: this.props.navigation.navigate
+        });
     }
 
     onDecline() {
-        this.setState({ showModal: false })
+        this.setState({showModal: false});
     }
 
     render() {
@@ -70,9 +91,9 @@ class EmployeeEdit extends Component {
 
 
 const mapStateToProps = (state) => {
-  const { name, phone, shift } = state.employeeForm;
+    const {name, phone, shift} = state.employeeForm;
 
-  return { name, phone, shift };
+    return {name, phone, shift};
 };
 
 export default connect(mapStateToProps, {

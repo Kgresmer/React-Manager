@@ -3,14 +3,15 @@ import {Card, CardSection, Button } from "./common";
 import { connect } from 'react-redux';
 import { employeeCreate } from "../actions";
 import EmployeeForm from "./EmployeeForm";
-import * as ToastAndroid from "react-native";
 
 class EmployeeCreate extends Component {
+    static navigationOptions = {
+        title: 'Create Employee',
+    };
 
     onButtonPress() {
         const { name, phone, shift } = this.props;
-        this.props.employeeCreate({ name, phone, shift: shift || 'Monday' });
-        ToastAndroid.show('You have a new employee!', ToastAndroid.SHORT);
+        this.props.employeeCreate({ name, phone, shift: shift || 'Monday', navigate: this.props.navigation.navigate });
     }
 
     render() {
