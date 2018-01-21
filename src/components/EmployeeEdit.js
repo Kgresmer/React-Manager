@@ -10,10 +10,13 @@ class EmployeeEdit extends Component {
     static navigationOptions = ({navigation}) => {
         return {
             title: `Edit Employee: ${navigation.state.params.employee.name}`,
-            headerTitleStyle: {textAlign: 'center', alignSelf: 'center'},
-            headerStyle: {
-                backgroundColor: 'white',
+            headerTitleStyle: {
+                textAlign: 'center',
+                color: 'white'
             },
+            headerStyle: {
+                backgroundColor: '#ff7f41'
+            }
         }
     };
 

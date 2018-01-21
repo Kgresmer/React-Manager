@@ -1,21 +1,27 @@
 import _ from 'lodash';
-import React, { Component } from 'react';
-import { ListView } from 'react-native';
-import { connect } from 'react-redux';
+import React, {Component} from 'react';
+import {ListView} from 'react-native';
+import {connect} from 'react-redux';
 import {employeesFetch} from "../actions/EmployeeActions";
 import ListItem from './ListItem';
 import {Button} from "./common";
 
 class EmployeeList extends Component {
 
-    static navigationOptions = ({ navigation }) => {
+    static navigationOptions = ({navigation}) => {
         return {
             title: 'Employees',
             headerRight: <Button onPress={
-                    () => {
+                () => {
                     navigation.navigate('CreateEmployee');
                 }
             }>Add</Button>,
+            headerStyle: {
+                backgroundColor: '#ff7f41'
+            },
+            headerTitleStyle: {
+                color: 'white'
+            }
         }
     };
 
@@ -29,7 +35,7 @@ class EmployeeList extends Component {
         this.createDataSource(nextProps);
     }
 
-    createDataSource({ employees }) {
+    createDataSource({employees}) {
         const ds = new ListView.DataSource({
             rowHasChanged: (r1, r2) => r1 !== r2
         });
@@ -56,9 +62,9 @@ class EmployeeList extends Component {
 const mapStateToProps = state => {
     // turns object into array with a function
     const employees = _.map(state.employees, (val, uid) => {
-      return { ...val, uid };
+        return {...val, uid};
     });
-    return { employees };
+    return {employees};
 };
 
-export default connect(mapStateToProps, { employeesFetch})(EmployeeList);
+export default connect(mapStateToProps, {employeesFetch})(EmployeeList);

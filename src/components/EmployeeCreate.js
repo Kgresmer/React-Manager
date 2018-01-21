@@ -7,6 +7,12 @@ import EmployeeForm from "./EmployeeForm";
 class EmployeeCreate extends Component {
     static navigationOptions = {
         title: 'Create Employee',
+        headerStyle: {
+            backgroundColor: '#ff7f41'
+        },
+        headerTitleStyle:  {
+            color: 'white'
+        }
     };
 
     onButtonPress() {

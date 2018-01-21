@@ -17,21 +17,27 @@ const Button = ({ children, onPress, buttonStyleDyn, textStyleDyn }) => {
 const styles = StyleSheet.create({
     buttonStyle: {
         flex: 1,
+        justifyContent: 'center',
         alignSelf: 'stretch', //stretch to fill the limits of the container
-        backgroundColor: '#fff',
+        backgroundColor: 'white',
         borderRadius: 5,
         borderWidth: 1,
-        borderColor: '#007aff',
+        borderColor: 'white',
         marginLeft: 5,
-        marginRight: 5
+        marginRight: 5,
+        marginTop: 5,
+        marginBottom: 5
     },
     textStyle: {
-        alignSelf: 'center',
-        color: '#007aff',
+        color: '#ff7f41',
         fontSize: 16,
         fontWeight: '600',
         paddingTop: 10,
-        paddingBottom: 10
+        paddingBottom: 10,
+        paddingLeft: 20,
+        paddingRight: 20,
+        alignSelf: 'center',
+        justifyContent: 'center'
     }
 });
 

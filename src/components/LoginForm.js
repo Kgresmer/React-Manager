@@ -7,6 +7,12 @@ import {connect} from 'react-redux';
 class LoginForm extends Component {
     static navigationOptions = {
         title: 'Please Login',
+        headerStyle: {
+            backgroundColor: '#ff7f41'
+        },
+        headerTitleStyle:  {
+            color: 'white'
+        }
     };
 
     onEmailChange(text) {
@@ -19,7 +25,7 @@ class LoginForm extends Component {
 
     onButtonPress() {
         const {email, password} = this.props;
-        const { navigate } = this.props.navigation;
+        const {navigate} = this.props.navigation;
         this.props.loginUser({email, password, navigate});
     }
 
@@ -54,7 +60,7 @@ class LoginForm extends Component {
                 <CardSection>
                     <Input
                         label="Email"
-                        placeholder="email@gmail.com"
+                        placeholder="cheese23@host.com"
                         onChangeText={this.onEmailChange.bind(this)}
                         value={this.props.email}
                     />

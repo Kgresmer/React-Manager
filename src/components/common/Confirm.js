@@ -1,44 +1,48 @@
 import React from 'react';
-import  { Text, View, Modal } from 'react-native';
-import { CardSection } from './CardSection';
-import { Button } from './Button';
+import {Text, View, Modal, StyleSheet} from 'react-native';
+import {CardSection} from './CardSection';
+import {Button} from './Button';
+import {Card} from "./Card";
 
 
-const Confirm = ({ children, onAccept, onDecline, visible }) => {
+const Confirm = ({children, onAccept, onDecline, visible}) => {
     const {cardSectionStyles, textStyles, containerStyles} = styles;
 
     return (
-      <Modal
+        <Modal
             visible={visible}
             transparent
             animationType="slide"
             onRequestClose={() => {}}
           >
           <View style={containerStyles}>
-              <CardSection style={cardSectionStyles}>
-                  <Text style={textStyles}>{children}</Text>
-              </CardSection>
-
-              <CardSection>
-                  <Button onPress={onAccept}>Yes</Button>
-                  <Button onPress={onDecline}>No</Button>
-              </CardSection>
+              <Card dynamicStyles={cardSectionStyles}>
+                  <CardSection>
+                      <Text style={textStyles}>{children}</Text>
+                  </CardSection>
+                  <CardSection>
+                      <Button onPress={onAccept}>Yes</Button>
+                      <Button onPress={onDecline}>No</Button>
+                  </CardSection>
+              </Card>
           </View>
       </Modal>
     );
 };
 
-const styles = {
+const styles = StyleSheet.create({
     cardSectionStyles: {
-        justifyContent: 'center'
+        justifyContent: 'center',
+        marginLeft: 35,
+        marginRight: 35,
+        borderRadius: 5
     },
     textStyles: {
         flex: 1,
         fontSize: 18,
         textAlign: 'center',
         lineHeight: 40,
-        marginLeft: 10,
-        marginRight: 10
+        marginBottom: 15
     },
     containerStyles: {
         backgroundColor: 'rgba(0,0,0,0.75)',
@@ -46,6 +50,6 @@ const styles = {
         flex: 1,
         justifyContent: 'center'
     }
-};
+});
 
-export { Confirm };
+export {Confirm};

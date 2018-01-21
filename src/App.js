@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
 import {Provider} from 'react-redux';
-import {createStore, applyMiddleware } from 'redux';
+import {applyMiddleware, createStore} from 'redux';
 import reducers from './reducers';
 import ReduxThunk from 'redux-thunk';
 import firebase from 'firebase';
-import { StackNavigator } from 'react-navigation';
+import {StackNavigator} from 'react-navigation';
 import LoginForm from "./components/LoginForm";
 import EmployeeList from "./components/EmployeeList";
 import EmployeeCreate from "./components/EmployeeCreate";
@@ -12,11 +12,13 @@ import EmployeeEdit from "./components/EmployeeEdit";
 
 
 const SimpleApp = StackNavigator({
-    Login: { screen: LoginForm },
+    Login: {
+        screen: LoginForm,
+    },
     Employees: {
         screen: EmployeeList
     },
-    CreateEmployee: { screen: EmployeeCreate },
+    CreateEmployee: {screen: EmployeeCreate},
     EditEmployee: {
         screen: EmployeeEdit
     }
@@ -47,7 +49,7 @@ export default class App extends Component<{}> {
         const store = createStore(reducers, {}, applyMiddleware(ReduxThunk));
         return (
             <Provider store={store}>
-                <SimpleApp />
+                <SimpleApp/>
             </Provider>
         );
     }

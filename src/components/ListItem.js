@@ -28,7 +28,10 @@ class ListItem extends Component {
 const styles = {
     titleStyles: {
         fontSize: 18,
-        paddingLeft: 15
+        paddingLeft: 15,
+        paddingTop: 8,
+        paddingBottom: 8,
+        color: 'white'
     }
 };
 
