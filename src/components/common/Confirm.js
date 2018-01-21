@@ -42,7 +42,8 @@ const styles = StyleSheet.create({
         fontSize: 18,
         textAlign: 'center',
         lineHeight: 40,
-        marginBottom: 15
+        marginBottom: 15,
+        color: 'white'
     },
     containerStyles: {
         backgroundColor: 'rgba(0,0,0,0.75)',
