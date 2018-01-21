@@ -13,6 +13,7 @@ class EmployeeForm extends Component {
                 <CardSection>
                     <Input
                         label="Name"
+                        keyboardType="default"
                         placeholder="Phillip"
                         value={this.props.name}
                         onChangeText={value => this.props.employeeUpdate({prop: 'name', value})}
@@ -22,6 +23,7 @@ class EmployeeForm extends Component {
                 <CardSection>
                     <Input
                         label="Phone"
+                        keyboardType="phone-pad"
                         placeholder="555-5555"
                         value={this.props.phone}
                         onChangeText={value => this.props.employeeUpdate({prop: 'phone', value})}
